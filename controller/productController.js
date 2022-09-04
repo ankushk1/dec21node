@@ -5,6 +5,12 @@ exports.createProduct = async (req, res) => {
     // find return arr of data and findOne return one obj or data
     // arr >> filter -> Array of filtered data
     // arr >> find ->  filtered data elem/obj
+    //1. Express validator
+    //2. We can add validations in FE only
+
+    if (!req.body.name || !req.body.description) {
+      return res.status(400).json({ message: "Required fields missing" });
+    }
 
     const product = await Product.findOne({ name: req.body.name });
     if (product) {
@@ -56,6 +62,82 @@ exports.getProductById = async (req, res) => {
       product: product,
       message: "Product fetched Successfully"
     });
+  } catch (err) {
+    return res
+      .status(500)
+      .json({ error: err, message: "Internal Server Error" });
+  }
+};
+
+exports.updateProduct = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const productUpdated = await Product.findByIdAndUpdate(id, req.body);
+    if (!productUpdated) {
+      return res
+        .status(400)
+        .json({ message: "Error updating product/Invalid Id" });
+    }
+    return res.status(200).json({ message: "Product updated successfully" });
+  } catch (err) {
+    return res
+      .status(500)
+      .json({ error: err, message: "Internal Server Error" });
+  }
+};
+
+exports.deleteProduct = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const productDeleted = await Product.findByIdAndDelete(id);
+    if (!productDeleted) {
+      return res
+        .status(400)
+        .json({ message: "Error deleting product/Invalid Id" });
+    }
+    return res.status(200).json({ message: "Product deleted successfully" });
+  } catch (err) {
+    return res
+      .status(500)
+      .json({ error: err, message: "Internal Server Error" });
+  }
+};
+
+exports.deactivateProduct = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const productUpdated = await Product.findByIdAndUpdate(id, {
+      isActive: false
+    });
+    if (!productUpdated) {
+      return res
+        .status(400)
+        .json({ message: "Error deactivating product/Invalid Id" });
+    }
+    return res
+      .status(200)
+      .json({ message: "Product deactivated successfully" });
+  } catch (err) {
+    return res
+      .status(500)
+      .json({ error: err, message: "Internal Server Error" });
+  }
+};
+
+exports.updateQuantityByNumber = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const productUpdated = await Product.findByIdAndUpdate(id, {
+      $inc: { quantity: req.body.num }
+    });
+    if (!productUpdated) {
+      return res
+        .status(400)
+        .json({ message: "Error updating quantity/Invalid Id" });
+    }
+    return res
+      .status(200)
+      .json({ message: "Quantity updated successfully" });
   } catch (err) {
     return res
       .status(500)
