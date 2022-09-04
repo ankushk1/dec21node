@@ -4,11 +4,13 @@ const port = 8000;
 const bodyParser = require("body-parser");
 const db = require("./config/mongoose");
 const userRoutes = require("./routes/userRoutes");
+const productRoutes = require("./routes/productRoutes");
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use('/user', userRoutes)
-
+app.use('/product', productRoutes)
+app.set('secretKey', "dec21")
 // app.get("/hey", (req, res) => {
 //   res.send("Hey");
 // });
