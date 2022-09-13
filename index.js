@@ -5,11 +5,13 @@ const bodyParser = require("body-parser");
 const db = require("./config/mongoose");
 const userRoutes = require("./routes/userRoutes");
 const productRoutes = require("./routes/productRoutes");
+const categoryRoutes = require("./routes/categoryRoutes");
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use('/user', userRoutes)
 app.use('/product', productRoutes)
+app.use('/category', categoryRoutes)
 app.set('secretKey', "dec21")
 // app.get("/hey", (req, res) => {
 //   res.send("Hey");

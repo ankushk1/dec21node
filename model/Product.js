@@ -24,6 +24,21 @@ const productSchema = new mongoose.Schema(
     isActive: {
       type: Boolean,
       default: true
+    },
+    category: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: 'Category'
+    },
+    created_by: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: 'User'
+    },
+    updated_by: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: 'User'
     }
   },
   { timestamps: true }

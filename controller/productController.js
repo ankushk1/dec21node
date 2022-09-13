@@ -8,9 +8,9 @@ exports.createProduct = async (req, res) => {
     //1. Express validator
     //2. We can add validations in FE only
 
-    if (!req.body.name || !req.body.description) {
-      return res.status(400).json({ message: "Required fields missing" });
-    }
+    // if (!req.body.name || !req.body.description) {
+    //   return res.status(400).json({ message: "Required fields missing" });
+    // }
 
     const product = await Product.findOne({ name: req.body.name });
     if (product) {
@@ -18,7 +18,7 @@ exports.createProduct = async (req, res) => {
     }
     // const newProductCreated = await Product.create(req.body)
     // return res.status(200).json({productData : newProductCreated,  message: "Product created"})
-    await Product.create(req.body);
+    await Product.create({ ...req.body, created_by: req.body.userId });
     // const data = new Product(req.body);
     // data.save();
 
@@ -26,6 +26,7 @@ exports.createProduct = async (req, res) => {
       message: "Product created"
     });
   } catch (err) {
+    console.log(err);
     return res
       .status(500)
       .json({ error: err, message: "Internal Server Error" });
@@ -34,7 +35,12 @@ exports.createProduct = async (req, res) => {
 
 exports.getProducts = async (req, res) => {
   try {
-    const products = await Product.find({ isActive: true });
+    const products = await Product.find({ isActive: true })
+      .populate("category", "name categoryType")
+      .populate("created_by", "firstname email")
+      .populate("updated_by", "firstname email")
+    // finding obj based on ID and then add the whole obj in that key
+
     // if(!products.length ){
     if (products.length < 1) {
       return res.status(400).json({ message: "No Products found" });
@@ -72,7 +78,10 @@ exports.getProductById = async (req, res) => {
 exports.updateProduct = async (req, res) => {
   try {
     const { id } = req.params;
-    const productUpdated = await Product.findByIdAndUpdate(id, req.body);
+    const productUpdated = await Product.findByIdAndUpdate(id, {
+      ...req.body,
+      updated_by: req.body.userID
+    });
     if (!productUpdated) {
       return res
         .status(400)
@@ -135,9 +144,7 @@ exports.updateQuantityByNumber = async (req, res) => {
         .status(400)
         .json({ message: "Error updating quantity/Invalid Id" });
     }
-    return res
-      .status(200)
-      .json({ message: "Quantity updated successfully" });
+    return res.status(200).json({ message: "Quantity updated successfully" });
   } catch (err) {
     return res
       .status(500)
