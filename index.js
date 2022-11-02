@@ -6,6 +6,13 @@ const db = require("./config/mongoose");
 const userRoutes = require("./routes/userRoutes");
 const productRoutes = require("./routes/productRoutes");
 const categoryRoutes = require("./routes/categoryRoutes");
+const cors = require('cors')
+const corsOptions = {
+  origin: "*",
+}
+
+app.use(cors(corsOptions))
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
