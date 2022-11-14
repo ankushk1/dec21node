@@ -42,7 +42,7 @@ exports.signin = async (req, res) => {
     });
     return res
       .status(200)
-      .json({ token: JWTtoken, message: "Sign in successfull" });
+      .json({ token: JWTtoken, userId: _id ,  message: "Sign in successfull" });
   } catch (err) {
     return res
       .status(500)

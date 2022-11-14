@@ -15,11 +15,8 @@ const productSchema = new mongoose.Schema(
       required: true
     },
     quantity: {
-      type: Number,
-      required: true
-    },
-    category: {
       type: String,
+      required: true
     },
     isActive: {
       type: Boolean,
@@ -32,12 +29,10 @@ const productSchema = new mongoose.Schema(
     },
     created_by: {
       type: mongoose.Schema.Types.ObjectId,
-      required: true,
       ref: 'User'
     },
     updated_by: {
       type: mongoose.Schema.Types.ObjectId,
-      required: true,
       ref: 'User'
     }
   },

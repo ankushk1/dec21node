@@ -5,6 +5,6 @@ const router = express.Router();
 
 router.post("/signup" ,signup)
 router.post("/signin" ,signin)
-router.post("/test" , validateJwt, testApi)
+// router.post("/test" , validateJwt, testApi)
 
 module.exports = router;
