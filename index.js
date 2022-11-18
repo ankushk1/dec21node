@@ -1,6 +1,7 @@
+require("dotenv").config();
 const express = require("express");
 const app = express();
-const port = 8000;
+const port = process.env.PORT || 8000;
 const bodyParser = require("body-parser");
 const db = require("./config/mongoose");
 const userRoutes = require("./routes/userRoutes");
@@ -83,6 +84,10 @@ app.set('secretKey', "dec21")
 //   const user = userArr.find((user) => user.id === userId);
 //   return res.json({ userData: user})
 // })
+
+app.get("/", (req, res) => {
+  res.send("Hey, server runnning on Heroku")
+})
 
 app.listen(port, () => {
   console.log("Server running on port " + port);

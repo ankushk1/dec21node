@@ -1,12 +1,14 @@
 const mongoose = require("mongoose");
 
-mongoose.connect("mongodb://127.0.0.1/dec21DB"
-// ,{
-//   useNewUrlParser: true,
-//   useUnifiedTopology: true
-// }
+console.log(process.env.PORT)
+mongoose.connect(
+  process.env.MONGO_URI 
+,{
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+}
 );
-
+//UlHHeHF3kjlbQwV6
 const db = mongoose.connection;
 
 db.on("error", (err) => {
