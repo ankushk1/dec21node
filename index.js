@@ -85,6 +85,11 @@ app.set('secretKey', "dec21")
 //   return res.json({ userData: user})
 // })
 
+
+app.get("/", (req, res) => {
+  res.send("Hey node server running on Heroku");
+});
+
 app.listen(port, () => {
   console.log("Server running on port " + port);
 });
