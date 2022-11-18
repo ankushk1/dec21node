@@ -36,13 +36,14 @@ exports.signin = async (req, res) => {
     if (!isPasswordValid) {
       return res.status(400).json({ message: "Invalid password" });
     }
-    const { _id, email, firstname } = user;
+    console.log(user);
+    const { _id, email, firstname, role } = user;
     const JWTtoken = jwt.sign({ _id, email, firstname }, req.app.get('secretKey'), {
       expiresIn : '2h'
     });
     return res
       .status(200)
-      .json({ token: JWTtoken, userId: _id ,  message: "Sign in successfull" });
+      .json({ token: JWTtoken, userId: _id , userRole: role, message: "Sign in successfull" });
   } catch (err) {
     return res
       .status(500)
