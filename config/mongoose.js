@@ -1,8 +1,7 @@
 const mongoose = require("mongoose");
 
-console.log(process.env.PORT)
 mongoose.connect(
-  process.env.MONGO_URI 
+  process.env.MONGODB_URI 
 ,{
   useNewUrlParser: true,
   useUnifiedTopology: true
