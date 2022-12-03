@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken");
 
 exports.validateJwt = (req, res, next) => {
   try {
-    const token = req.headers["access-token"];
+    const token = req.headers["access-token"]; //undefined
     if (!token) {
       return res.status(400).json({ message: "Jwt is required" });
     }
